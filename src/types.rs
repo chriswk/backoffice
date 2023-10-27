@@ -56,7 +56,7 @@ impl Default for BuildInfo {
             short_commit_hash: build::SHORT_COMMIT.into(),
             full_commit_hash: build::COMMIT_HASH.into(),
             git_commit_date: DateTime::parse_from_rfc3339(build::COMMIT_DATE_3339)
-                .expect("shadow-rs did not give proper date")
+                .unwrap_or_else(|_| Utc::now().into())
                 .into(),
             build_os: build::BUILD_OS.into(),
             build_target: build::BUILD_TARGET.into(),
