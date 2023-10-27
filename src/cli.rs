@@ -3,6 +3,7 @@ use crate::types::BackofficeResult;
 use clap::{Args, Parser};
 use reqwest::Url;
 use std::path::PathBuf;
+use tracing::{info, instrument};
 
 #[derive(Args, Debug, Clone)]
 pub struct TlsArgs {
@@ -76,13 +77,17 @@ fn parse_url(url: &str) -> Result<Url, String> {
 }
 
 impl BackofficeSettings {
+    #[instrument]
     pub fn redirect_url(&self) -> BackofficeResult<String> {
         let u = self.backoffice_url.clone();
         let f = u
             .join(&self.http_args.base_path)
             .map_err(|_| BackofficeError::InvalidRedirectUrl)?;
-        f.join("/auth/verify")
+        let redirect = f
+            .join("/auth/verify")
             .map_err(|_| BackofficeError::InvalidRedirectUrl)
-            .map(|u| u.to_string())
+            .map(|u| u.to_string());
+        info!("Found to be {redirect:?}");
+        redirect
     }
 }

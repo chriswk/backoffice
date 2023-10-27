@@ -2,6 +2,12 @@
 name = "backoffice"
 version = "0.1.0"
 edition = "2021"
+authors = ["chriswk <rust@chriswk.no>"]
+description = "A backoffice app for managing instances"
+readme = "README.md"
+repository = "https://github.com/chriswk/backoffice"
+homepage = "https://github.com/chriswk/backoffice"
+license = "MIT AND Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
